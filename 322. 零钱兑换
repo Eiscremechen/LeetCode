@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int coinChange(std::vector<int>& coins, int amount) {
+        //创建一个长度为amount + 1的数组dp，用于保存从0到amount每个金额所需的最少硬币数。
+        std::vector<int> dp(amount + 1, amount + 1);
+        //初始化dp[0]为0，因为凑出金额0不需要硬币。
+        dp[0] = 0;
+        //从1到amount遍历每个金额，对于每个金额，遍历硬币数组coins中的每个硬币面额。
+        for (int i = 0; i <= amount; i++) {
+            for (int j = 0; j < coins.size(); j++) {
+                //对于每个硬币面额，如果它小于等于当前遍历的金额，就尝试使用这个硬币来凑出当前金额。在这里，dp[i]表示当前金额i所需的最少硬币数。
+                if (coins[j] <= i) {
+                    //更新dp[i]，如果当前硬币的面额是coins[j]，那么可以使用这个硬币来凑出金额i，那么所需的最少硬币数就是dp[i - coins[j]] + 1。这里加1表示使用该枚硬币。
+                    //比较使用当前硬币和不使用当前硬币哪个需要的硬币数更少，取最小值更新dp[i]。
+                    dp[i] = std::min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        //最终，dp[amount]就是凑出总金额所需的最少硬币数。如果dp[amount]大于amount，表示无法凑出总金额，返回-1，否则返回dp[amount]。
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+};
