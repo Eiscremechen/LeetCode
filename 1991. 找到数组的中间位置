@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findMiddleIndex(vector<int>& nums) {
+        int i = 0;
+        int n = nums.size();
+        
+        while (i < n) {
+            int res_left = 0;
+            int res_right = 0;
+
+            for (int leftIndex = 0; leftIndex < i; leftIndex++) {
+                res_left += nums[leftIndex];
+            }
+            for (int rightIndex = i + 1; rightIndex < n; rightIndex++) {
+                res_right += nums[rightIndex];
+            }
+
+            if (res_left == res_right) {
+                return i;
+            }
+            else {
+                i++;
+            }
+
+        }
+        return -1;
+    }
+};
