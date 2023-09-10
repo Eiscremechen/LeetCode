@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(std::string s) {
+        size_t maxSubstring = 0;
+        int leftBoundary = 0;
+        int rightBoundary = 0;
+        std::set<char> Set;
+        while (rightBoundary < s.length()) {
+            if (Set.find(s[rightBoundary]) == Set.end()) {
+                Set.insert(s[rightBoundary]);
+                rightBoundary++;
+            }
+            else {
+                Set.erase(s[leftBoundary]);
+                leftBoundary++;
+            }
+            maxSubstring = std::max(Set.size(), maxSubstring);
+        }
+        return maxSubstring;
+    }
+};
