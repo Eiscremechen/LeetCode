@@ -1,0 +1,23 @@
+class Solution {
+public:
+    std::vector<int> sortedSquares(std::vector<int>& nums) {
+        int leftIndex = 0;
+        int rightIndex = nums.size() - 1;
+        int curr = rightIndex;
+        std::vector<int> res(rightIndex + 1, 0);
+        while (leftIndex <= rightIndex) {
+            if (nums[rightIndex] + nums[leftIndex] > 0) {
+                res[curr]= nums[rightIndex] * nums[rightIndex];
+                rightIndex--;
+                curr--;
+            }
+            else {
+                res[curr] = nums[leftIndex] * nums[leftIndex];
+                leftIndex++;
+                curr--;
+            }
+
+        }
+        return res;
+    }
+};
