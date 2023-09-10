@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void setZeroes(std::vector<std::vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        std::vector<bool> col_zero(n, false);
+        std::vector<bool> row_zero(m, false);
+
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                if (matrix[row][col] == 0) {
+                    col_zero[col] = true;
+                    row_zero[row] = true;
+                }
+            }
+        }
+
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                if (col_zero[col] == true || row_zero[row] == true) {
+                    matrix[row][col] = 0;
+                }
+            }
+        }
+
+    }
+};
