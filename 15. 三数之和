@@ -1,0 +1,44 @@
+class Solution {
+public:
+	std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
+		std::vector< std::vector<int>> ans_1;
+		
+		if (nums.size() < 3) {
+			return ans_1;
+		}
+		std::sort(nums.begin(), nums.end());
+
+		for (size_t  i = 0; i < nums.size() - 2; i++) {
+			if (nums[i] > 0) {
+				return ans_1;
+			}
+			if (i > 0 && nums[i] == nums[i - 1]) {
+				continue;
+			}
+
+			size_t  LeftIndex = i + 1;
+			size_t  RightIndex = nums.size() - 1;
+			while(LeftIndex < RightIndex) {
+				if (nums[i] + nums[LeftIndex] + nums[RightIndex] < 0) {
+					LeftIndex++;
+				}else if(nums[i] + nums[LeftIndex] + nums[RightIndex] > 0){
+					RightIndex--;
+				}
+				else {
+					ans_1.push_back({ nums[i], nums[LeftIndex], nums[RightIndex] });
+					//当nums = { -4,2,2 }时，LeftIndex = 2时，比较nums[LeftIndex] == nums[LeftIndex + 1]会数组越界，所以必须要加入LeftIndex < RightIndex条件
+					while (LeftIndex < RightIndex && nums[LeftIndex] == nums[LeftIndex + 1]) {
+						LeftIndex++;
+					}
+					while (LeftIndex < RightIndex && nums[RightIndex] == nums[RightIndex - 1]) {
+						RightIndex--;
+					}
+					LeftIndex++;
+					RightIndex--;
+				}
+			}		
+		}
+		return ans_1;
+	}
+
+};
