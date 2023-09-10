@@ -1,0 +1,43 @@
+class Solution {
+private:
+    std::vector<std::string> res;
+public:
+    std::vector<std::string> commonChars(std::vector<std::string>& words) {
+        std::unordered_map<char, int> count;
+
+        //以第一个单词位基础，载入所有字母
+        for (char c : words[0]) {
+            count[c]++;
+        }
+
+        for (int i = 1; i < words.size(); i++) {
+            std::unordered_map<char, int> Tempcount;
+            //以第i个单词位基础，载入所有字母
+            for (char c : words[i]) {
+                Tempcount[c]++;
+            }
+            //保存最小出现次数。
+            for (const auto& entry : count) {
+                char c = entry.first;
+                int num = entry.second;
+
+                if (Tempcount.find(c) != Tempcount.end()) {
+                    count[c] = std::min(Tempcount[c], count[c]);
+                }
+                else {
+                    count[c] = 0;
+                }
+            }
+        }
+        //构建输出vector
+        for (const auto& entry : count) {
+            char c = entry.first;
+            int num = entry.second;
+            while (num > 0) {
+                res.push_back(std::string(1, c));
+                num--;
+            }
+        }
+        return res;
+    }
+};
