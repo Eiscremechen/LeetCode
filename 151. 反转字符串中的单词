@@ -1,0 +1,30 @@
+class Solution {
+public:
+    std::string reverseWords(std::string s) {
+        std::string res;
+        std::vector<std::vector<int>> wordIndex;
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == ' ') {
+                continue;
+            }
+            else {
+                int j = i;
+                while (j < s.length() && s[j] != ' ') {
+                    j++;
+                }
+                wordIndex.push_back({ i, j - 1 });
+                i = j;
+            }
+
+        }
+
+        for (int i = wordIndex.size() - 1; i >= 0; i--) {
+            res.append( s.substr(wordIndex[i][0], wordIndex[i][1] - wordIndex[i][0] + 1));
+            if (i != 0) {
+                res.append(" ");
+            }
+
+        }
+        return res;
+    }
+};
