@@ -1,0 +1,29 @@
+class Solution {
+public:
+    std::vector<std::string> ans;
+    std::string path ="";
+    std::vector<std::string> letter = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+public:
+    void DFS(std::string& digits, int pos) {
+        if (pos == digits.size()) {
+            ans.push_back(path);
+            return;
+        }
+        int num = digits[pos] - '0';
+        for (int i = 0; i < letter[num].size(); i++) {
+            path.push_back(letter[num][i]);
+            DFS(digits, pos + 1);
+            path.pop_back();
+        }
+
+
+    }
+    std::vector<std::string> letterCombinations(std::string& digits) {
+        if (digits.empty()) {
+            return ans;
+        }
+        DFS(digits, 0);
+        return ans;
+    }
+};
