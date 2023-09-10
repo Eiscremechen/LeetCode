@@ -1,0 +1,29 @@
+class Solution {
+public:
+	std::vector<int> path;
+	std::vector<std::vector<int>> res;
+public:
+	void DFS(std::vector<int>& nums, const int& length, const int& deepth, std::vector<bool>& used) {
+		if (deepth == length) {
+			res.push_back(path);
+			return;
+		}
+		for (int i = 0; i < length; i++) {
+			if (used[i] == false) {
+				path.push_back(nums[i]);
+				used[i] = true;
+				DFS(nums, length, deepth + 1, used);
+				used[i] = false;
+				path.pop_back();
+			}
+		}
+		return;
+	}
+	std::vector<std::vector<int>> permute(std::vector<int>& nums) {
+		int length = nums.size();
+		std::vector<bool> used(nums.size(), false);
+		DFS(nums, length, 0, used);
+		return this->res;
+	}
+
+};
