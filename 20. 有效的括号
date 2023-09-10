@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isValid(string s) 
+    {
+        
+        while (
+            s.find("{}") != std::string::npos || 
+            s.find("[]") != std::string::npos || 
+            s.find("()") != std::string::npos) 
+        {
+            size_t found1 = s.find("{}");
+            size_t found2 = s.find("[]");
+            size_t found3 = s.find("()");
+
+            // find a paar of brackets, delete it.
+            if (found1 != std::string::npos) 
+            {
+                s.erase(found1, 2);
+                continue;
+            }
+                
+            if (found2 != std::string::npos)
+            {
+                s.erase(found2, 2);
+                continue;
+            }
+                
+            if (found3 != std::string::npos)
+            {
+                s.erase(found3, 2);
+                continue;
+            }
+        }
+
+        return s.empty();
+    }
+};
