@@ -1,0 +1,84 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+// class Solution {
+// public:
+//     ListNode* deleteDuplicates(ListNode* head) {
+//         if (!head || !head->next) {
+//             return head;
+//         }
+
+//         ListNode* curr = head;
+
+//         while (curr->next != nullptr) {
+//             if ( curr->next != nullptr && curr->val != curr->next->val) {
+//                 curr = curr->next;
+//                 continue;
+//             }
+//             else {
+//                 ListNode* temp = curr->next;
+//                 while (temp != nullptr) {
+//                     if (temp->val != curr->val) {
+//                         curr->next = temp;
+//                         break;
+//                     }
+//                     else {
+//                         temp = temp->next;
+//                     }
+//                 }
+//             }
+//         }
+        
+//         return head;
+//     }
+// };
+
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (!head || !head->next) {
+            return head;
+        }
+
+        ListNode* curr = head;
+
+        while (curr != nullptr) {
+            if (curr->next != nullptr && curr->val == curr->next->val) {
+                curr->next = curr->next->next;
+            }
+            else {
+                curr = curr->next;
+            }
+        }
+        return head;
+    }
+};
+
+// class Solution {
+// public:
+//     ListNode* deleteDuplicates(ListNode* head) {
+//         ListNode* curr = head;
+
+//         while (curr != nullptr && curr->next != nullptr) {
+//             if (curr->val == curr->next->val) {
+//                 ListNode* temp = curr->next;
+//                 while (temp != nullptr && temp->val == curr->val) {
+//                     temp = temp->next;
+//                 }
+//                 curr->next = temp;
+//             } else {
+//                 curr = curr->next;
+//             }
+//         }
+
+//         return head;
+//     }
+// };
