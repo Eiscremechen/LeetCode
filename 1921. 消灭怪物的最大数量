@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
+        //time[i] 代表需要不迟于time[i]消灭第i个怪物。
+        std::vector<int> time;
+        int n = dist.size();
+        for(int i = 0; i < n; i++) {
+            time.push_back( (dist[i] - 1 ) / speed[i] );
+        }
+        std::sort(time.begin(), time.end());
+        //每次消灭最近的，也就是time最前面的。
+        for(int i = 0; i < n; i++) {
+            if (i > time[i]){
+                return i;
+            }
+            
+        }
+        return n;
+    }
+};
