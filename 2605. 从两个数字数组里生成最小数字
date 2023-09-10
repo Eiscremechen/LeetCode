@@ -1,0 +1,30 @@
+class Solution {
+private:
+    std::unordered_map<int, int> Index;
+public:
+    int minNumber(std::vector<int>& nums1, std::vector<int>& nums2) {
+        for (int i = 0; i < nums1.size(); i++) {
+            Index[nums1[i]] = i;
+        }
+        int c = 10;
+        for (int i = 0; i < nums2.size(); i++) {
+            if (Index.find(nums2[i]) != Index.end()) {
+                c = std::min(c, nums2[i]);
+            }
+        }
+        if (c != 10) {
+            return c;
+        }
+
+        int a= nums1[0], b = nums2[0];
+        for (int i = 1; i < nums1.size(); i++) {
+            a = std::min(a, nums1[i]);
+        }
+        for (int i = 1; i < nums2.size(); i++) {
+            b = std::min(b, nums2[i]);
+        }
+
+
+        return std::min(a*10 + b, b*10 + a);
+    }
+};
