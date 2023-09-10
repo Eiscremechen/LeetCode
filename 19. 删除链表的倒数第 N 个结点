@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* temp_1 = dummy;
+        ListNode* temp_2 = head;
+
+        int i = 1;
+        while (i < n && temp_2 != nullptr) {
+            temp_2 = temp_2->next;
+            i++;
+        }
+        while (temp_2 != nullptr && temp_2->next != nullptr) {
+            temp_1 = temp_1->next;
+            temp_2 = temp_2->next;
+        }
+
+        temp_1->next = temp_1->next->next;
+//         你可以直接返回 head，因为删除操作不会影响链表的头节点。但是，删除倒数第 n 个节点后，链表的结构发生了变化，原来的头节点可能会发生改变，所以为了保险起见，一般会使用虚拟头节点来管理链表，以确保返回的始终是正确的头节点。
+
+// 如果你确定删除操作不会影响链表的头节点，并且能够确保 head 在删除后仍然是有效的头节点，那么直接返回 head 是可行的。但在一般情况下，为了代码的健壮性和可维护性，使用虚拟头节点是一个更好的选择。这样，无论何时进行操作，都可以确保链表的头节点正确。
+        ListNode* ans = dummy->next;
+
+        delete dummy;
+        dummy = nullptr;
+
+        return ans;
+
+    }
+};
