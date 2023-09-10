@@ -1,0 +1,39 @@
+class Solution {
+public:
+	std::vector<int> path;
+	std::vector<std::vector<int>> res;
+
+public:
+	void DFS(std::vector<int>& nums, const int length ,const int deepth, std::vector<bool>& used) {
+		if (deepth == length) {
+			res.push_back(path);
+			return;
+		}
+		for (int i = 0; i < length; i++) {
+			if (used[i]) {
+				continue;
+			}
+// 			大神的理解：for循环保证了从数组中从前往后一个一个取值，再用if判断条件。所以nums[i - 1]一定比nums[i]先被取值和判断。如果nums[i - 1]被取值了，那used[i - 1]会被置true，只有当递归再回退到这一层时再将它置false。每递归一层都是在寻找数组对应于递归深度位置的值，每一层里用for循环来寻找。所以当used[i - 1] == true时，说明nums[i - 1]和nums[i]分别属于两层递归中，也就是我们要用这两个数分别放在数组的两个位置，这时不需要去重。但是当used[i - 1] == 0时，说明nums[i - 1]和nums[i]属于同一层递归中（只是for循环进入下一层循环），也就是我们要用这两个数放在数组中的同一个位置上，这就是我们要去重的情况。
+// 可以好好的遍历一次就会理解该思路了，遍历时主要是要理解，第2层的元素，在第三层所有的元素被访问后，就会回溯
+// 到第一层，回到第一层后所有的元素是没有标记的，所以去重一定要加上used[i-1]==0这样才说明他们才是在同一层
+			if(i > 0 && nums[i]==nums[i-1] && used[i-1] == false){
+        continue;
+      }
+			path.push_back(nums[i]);
+			used[i] = true;
+			DFS(nums, length, deepth + 1, used);
+			used[i] = false;
+			path.pop_back();
+		}
+		return;
+
+	}
+	std::vector<std::vector<int>> permuteUnique(std::vector<int>& nums) {
+		int length = nums.size();
+		std::vector<bool> used(nums.size(), false);
+		sort(nums.begin(), nums.end());
+		DFS(nums, length, 0, used);
+		return this->res;
+	}
+
+};
