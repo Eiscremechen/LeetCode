@@ -1,0 +1,16 @@
+class Solution {
+public:
+    std::vector<int> shortestToChar(std::string s, char c) {
+        int n = s.length();
+        std::vector<int> res(n, n - 1);
+        for (int i = 0; i < n; i++){
+                if(s[i] == c){
+                    for(int j = 0; j < n; j++){
+                        res[j] = std::min (res[j], std::abs(i-j) );
+                }
+
+            }
+        }
+        return res;
+    }
+};
