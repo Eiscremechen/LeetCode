@@ -1,0 +1,29 @@
+class Solution {
+public:
+    std::vector<std::string> summaryRanges(std::vector<int>& nums) {
+        std::vector<std::string> res;
+        int n = nums.size();
+        int leftIndex = 0;
+        int rightIndex = leftIndex + 0;
+        while (rightIndex < n ) {
+            if(rightIndex + 1 < n && nums[rightIndex] + 1 == nums[rightIndex + 1]) {
+                rightIndex++;
+            }
+            else
+            {
+                std::string res_element = std::to_string(nums[leftIndex]);
+                if (leftIndex < rightIndex) {
+                    res_element.append("->");
+                    res_element.append(std::to_string(nums[rightIndex]));
+                    res.push_back(res_element);
+                }
+                else {
+                    res.push_back(res_element);
+                }
+                leftIndex = rightIndex + 1;
+                rightIndex++;
+            }
+        }
+        return res;
+    }
+};
