@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        return nums[(nums.size()) / 2];
+
+    }
+};
+
+
+or
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        std::unordered_map<int, int> res;
+        int n = nums.size();
+        for(int i : nums){
+            if(res.find(i) != res.end()){
+                res[i]++;
+            } else {
+                res[i] = 1;
+            }  
+        }
+        for(auto entry : res){
+            int num = entry.first;
+            int frequency = entry.second;
+            if(frequency > (n / 2) ){
+                return num;
+            }
+        
+        }
+        return 0;
+    }
+};
