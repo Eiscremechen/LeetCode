@@ -1,0 +1,36 @@
+class Solution {
+public:
+    std::string reverseStr(std::string s, int k) {
+        const int n = s.length();
+        for(int i = 0; i < n; i += 2*k ){
+            reverseString(s, i, std::min(n - 1, k + i - 1));
+        }
+        return s;
+    }
+
+    void reverseString(std::string& s, int leftIndex, int rightIndex) {
+
+        while (leftIndex < rightIndex) {
+            std::swap(s[leftIndex], s[rightIndex]);
+            leftIndex++;
+            rightIndex--;
+        }
+
+    }
+
+};
+
+//reverse(s.begin() + i, s.begin() + std::min(n - 1, k + i )); 不可以使用，因为reverse是左闭右开的反转区间。
+// class Solution {
+// public:
+//     std::string reverseStr(std::string& s, int& k) {
+//         const int n = s.length();
+//         for (int i = 0; i < n; i += 2 * k) {
+//             if (i < std::min(n - 1, k + i - 1)) {
+//                 reverse(s.begin() + i, s.begin() + std::min(n - 1, k + i ));
+//             }
+//         }
+//         return s;
+//     }
+// };
+//这样写的话，对于k= s.size()来说，反转区间不包括最后一个字母。
