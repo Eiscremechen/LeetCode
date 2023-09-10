@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int jump(std::vector<int>& nums) {
+        int jump = 0;
+        //当前步能到达最远地方的下标。
+        int currFar = 0;
+        //走路过程中能到达最远地方的下标。
+        int currFarthest = 0;
+        int n = nums.size();
+        if(n == 1){
+            return jump;
+        }
+
+        for (int i = 0; i < n; i++) {
+            //更新走路过程中的最远值的下标。
+            currFarthest = std::max(currFarthest, nums[i] + i);
+            //如果达到当前步能到达最远地方的下标。
+            if (i == currFar) {
+                //此时算走了一步
+                jump++;
+                //更新：下一步要到最远的下标
+                currFar = currFarthest;
+                //如果走到最后一个下标，即完成行走步骤。
+                if (currFar >= n - 1) {
+                    break;
+                }
+
+            }
+        }
+        return jump;
+    }
+};
