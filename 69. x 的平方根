@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
+
+        double C = x;
+        double x_0 = x;
+
+        while (true) {
+            double x_i = 0.5 * (x_0 + C / x_0);
+            if (fabs(x_i - x_0) < 1e-6) {
+                break;
+            }
+            else {
+                x_0 = x_i;
+            }
+        }
+        return int(x_0);
+    }
+};
