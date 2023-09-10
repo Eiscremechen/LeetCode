@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode* curr = head;
+        std::stack<int> vals;
+        while (curr != nullptr) {
+            vals.push(curr->val);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr != nullptr) {
+            if (curr->val != vals.top()) {
+                return false;
+            }
+            curr = curr->next;
+            vals.pop();
+        }
+        
+        return true;
+    }
+};
