@@ -1,4 +1,51 @@
 class Solution {
+//KMP算法
+private:
+    std::string needle;
+    std::string haystack;
+    
+public:
+    std::vector<int> Nextvector(std::string needle){
+        std::vector<int> Next(needle.size());
+        //left一直指向最长前缀的后一个元素，其值代表最长前缀长度
+        //right一直指向最长后缀的后一个元素
+        for(int l = 0, r = 1; r < needle.length(); r++ ){
+            while(l > 0 && needle[l] != needle[r]){
+                l = Next[l - 1];
+            }
+            if(needle[l] == needle[r]){
+                l++;
+            }
+            Next[r] = l;
+        }
+        return Next;
+    }
+
+    int strStr(string haystack, string needle) 
+    {   
+        std::vector<int> Next = Nextvector(needle);
+        if(needle.length() == 0 || haystack.length() == 0) {
+            return 0;
+        }
+        for(int i = 0, j = 0; i < haystack.length(); i++){
+            while(j > 0 && haystack[i] != needle[j]){
+                j = Next[j-1];
+            }
+            if(haystack[i] == needle[j]){
+                j++;
+            }
+            if(j == needle.size()){
+                return i - needle.size() + 1;
+            }
+        }  
+        return -1;
+    }
+};
+
+or
+
+
+class Solution {
 public:
     int strStr(string haystack, string needle) 
     {
