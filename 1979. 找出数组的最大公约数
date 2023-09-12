@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int findGCD(std::vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int a = *nums.begin();
+        int b = *(nums.end() - 1);
+        while (a) {
+            int temp = b % a;
+            b = a;
+            a = temp;
+        }
+        return b;
+    }
+};
