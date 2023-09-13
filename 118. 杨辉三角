@@ -1,0 +1,19 @@
+class Solution {
+public:
+    std::vector<std::vector<int>> generate(int numRows) {
+        std::vector<std::vector<int>> res(numRows);
+        for (int i = 0; i < numRows; i++) {
+            ////resize会默认初始化为0. 也就是resize(i) 等同于 resize(i, 0);
+            //res[i].resize(i + 1);
+            for (int j = 0; j <= i ; j++) {
+                if (j == 0 || j == i) {
+                    res[i].push_back(1);
+                }
+                else {
+                    res[i].push_back(res[i - 1][j - 1] + res[i - 1][j]);
+                }
+            }
+        }
+        return res;
+    }
+};
