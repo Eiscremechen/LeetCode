@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int start = 0;
+        int end = 0;
+        int minNums = nums.size() + 1;
+        int sum = 0;
+        while(end < nums.size()){
+            sum = sum + nums[end];                
+            while(sum >= target){
+                minNums = std::min(end - start + 1, minNums);
+                sum = sum - nums[start];
+                start++;
+            }
+            end++;
+        }
+        return minNums == nums.size() + 1 ? 0: minNums;
+    }
+};
