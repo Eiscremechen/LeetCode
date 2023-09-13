@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool checkValidGrid(std::vector<std::vector<int>>& grid) {
+        if (grid[0][0] != 0){
+            return false;
+        }
+        int n = grid.size();
+        std::vector<std::vector<int>> step(n * n);
+        int x_0 = 0, y_0 = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                step[grid[i][j]] = {i,j};
+            }
+        }
+
+        for (int i = 1; i < n * n; i++) {
+            int dx = step[i][0] - step[i - 1][0];
+            int dy = step[i][1] - step[i - 1][1];
+            if (dx * dy == 2 || dx * dy == -2) {
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+};
