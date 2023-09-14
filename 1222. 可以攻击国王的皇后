@@ -1,0 +1,31 @@
+class Solution {
+public:
+    std::vector<std::vector<int>> queensAttacktheKing(std::vector<std::vector<int>>& queens, std::vector<int>& king) {
+        std::vector<int> dx = {0, 1, 1,  1,  0, -1, -1, -1,};
+        std::vector<int> dy = {1, 1, 0, -1, -1, -1,  0,  1,};
+        std::vector<std::vector<int>> res;
+
+        for (int i = 0; i < 8; i++) {
+            int x = king[0];
+            int y = king[1];
+            bool found = false;
+            while (true) {
+                x = x + dx[i];
+                y = y + dy[i];
+                if (x < 0 || x > 7 || y < 0 || y > 7 || found == true) {
+                    break;
+                }
+                for (auto it = queens.begin(); it != queens.end(); ++it) {
+                    const std::vector<int>& coord = *it;
+                    if (coord == std::vector<int>{ x, y }) {
+                        res.push_back({ x,y });
+                        queens.erase(it);
+                        found = true;
+                        break;
+                    }
+                }
+            }      
+        }
+        return res;
+    }
+};
