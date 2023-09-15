@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int giveGem(vector<int>& gem, vector<vector<int>>& operations) {
+        for(std::vector<std::vector<int>>::iterator it_1 = operations.begin(); it_1 != operations.end(); it_1++){
+            int gift = gem[(*it_1)[0]] / 2;
+            gem[(*it_1)[0]] = gem[(*it_1)[0]] - gift;
+            gem[(*it_1)[1]] = gem[(*it_1)[1]] + gift;
+        }
+        int maxNum = gem[0];
+        int minNum = gem[0];
+        for(int i = 1; i < gem.size(); i++){
+            maxNum = std::max(maxNum, gem[i]);
+            minNum = std::min(minNum, gem[i]);
+        }
+        return maxNum - minNum;
+    }
+};
