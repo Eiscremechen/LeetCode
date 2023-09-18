@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        std::unordered_map<int, int> Table;
+        int i = 0;
+        int n = nums.size();
+        while(i < n){
+            if(Table.find(nums[i]) != Table.end()){
+                Table[nums[i]]++;
+            } else{
+                Table[nums[i]] = 1;
+            }
+            i++;
+        }
+        std::vector<int> res;
+        for(auto entry = Table.begin(); entry != Table.end(); entry++){
+            if(entry->second > n / 3){
+                res.push_back(entry->first);
+            }
+        }
+    return res;
+    }
+};
