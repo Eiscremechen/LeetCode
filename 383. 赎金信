@@ -1,0 +1,48 @@
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        std::vector<int> hash(26, 0);
+        for(char a : magazine){
+            hash[a-'a']++;
+        }
+
+        for(char a : ransomNote){
+            hash[a-'a']--;
+        }
+
+        for(int i : hash){
+            if(i < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+
+// class Solution {
+// public:
+//     bool canConstruct(string ransomNote, string magazine) {
+//         std::unordered_map <char, int> HashTable;
+//         for(int i = 0; i < magazine.size(); i++){
+//             if(HashTable.find(magazine[i]) != HashTable.end()){
+//                 HashTable[magazine[i]]++;
+//             } else {
+//                 HashTable[magazine[i]] = 1;
+//             }
+//         }
+
+//         for(int i = 0; i < ransomNote.size(); i++){
+//             if(HashTable.find(ransomNote[i]) != HashTable.end()){
+//                 HashTable[ransomNote[i]]--;
+//                 if(HashTable[ransomNote[i]] < 0){
+//                     return false;
+//                 }
+//             } else {
+//                 return false;
+//             }
+//         }
+
+//         return true;
+//     }
+// };
