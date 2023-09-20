@@ -1,0 +1,67 @@
+class Solution {
+public:
+    std::vector<int> findDiagonalOrder(std::vector<std::vector<int>>& mat) {
+        int row = 0;
+        int column = 0;
+        std::vector<int> res;
+        int row_size = mat.size();
+        int column_size = mat[0].size();
+        //diagonal % 2 == 0  向右上寻找
+        //diagonal % 2 != 0  向左下寻找
+        // max diagonal = row_size + column_size - 1
+        int diagonal = 0;
+        while (diagonal <= row_size + column_size - 2) {
+            int row_start;
+            int column_start;
+            int row_end;
+            int column_end;
+            if (diagonal % 2 == 0) {
+                //start
+                row_start = std::min(diagonal, row_size - 1); //
+                column_start = std::max(0, diagonal - row_size + 1); //
+                //end
+                row_end = std::max(0, diagonal - column_size + 1);
+                column_end = std::min(diagonal, column_size - 1);
+
+                row = row_start;
+                column = column_start;
+                while (row <= row_end || column <= column_end) {
+                    res.push_back(mat[row][column]);
+                    if (row == row_end && column == column_end) {
+                        diagonal++;
+                        break;
+                    }
+                    else {
+                        row--;
+                        column++;
+                    }
+                }
+
+            }
+            else {
+                //start
+                row_start = std::max(0, diagonal - column_size + 1);
+                column_start = std::min(diagonal, column_size - 1); //
+                //end
+                row_end = std::min(diagonal, row_size - 1); //
+                column_end = std::max(0, diagonal - row_size + 1); //
+
+                row = row_start;
+                column = column_start;
+                while (row <= row_end || column <= column_end) {
+                    res.push_back(mat[row][column]);
+                    if (row == row_end && column == column_end) {
+                        diagonal++;
+                        break;
+                    }
+                    else {
+                        row++;
+                        column--;
+                    }
+                }
+            }
+
+        }
+        return res;
+    }
+};
