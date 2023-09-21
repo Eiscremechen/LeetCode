@@ -1,0 +1,23 @@
+class Solution {
+public:
+    std::vector<std::vector<int>> findMatrix(std::vector<int>& nums) {
+        int n = nums.size();
+        std::vector<int> temp(n + 1, 0);
+        for (int i = 0; i < n; i++) {
+            temp[nums[i]]++;
+        }
+
+        int maxElement = *std::max_element(temp.begin(), temp.end());
+        std::vector<std::vector<int>> res(maxElement, std::vector<int>());
+
+        for (int i = 0; i < temp.size(); i++) {
+            if (temp[i] > 0) {
+                for (int j = 0; j < temp[i]; j++) {
+                    res[j].push_back(i);
+                }
+            }
+        }
+        return res;
+
+    }
+};
