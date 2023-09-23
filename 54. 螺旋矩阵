@@ -1,0 +1,47 @@
+class Solution {
+public:
+    std::vector<int> spiralOrder(std::vector<std::vector<int>>& matrix) {
+        int top = 0;
+        int left = 0;
+        int bottom = matrix.size() - 1;
+        int right = matrix[0].size() - 1;
+
+        int row = 0;
+        int column = 0;
+        std::vector<int> res;
+
+        while(left <= right && top <= bottom){
+            column = left;
+            while (column <= right) {
+                res.push_back(matrix[top][column]);
+                column++;
+            }
+
+            row = top + 1;
+            while (row <= bottom) {
+                res.push_back(matrix[row][right]);
+                row++;
+            }
+
+            if (left < right && top < bottom) {
+                column = right - 1;
+                while (column > left) {
+                    res.push_back(matrix[bottom][column]);
+                    column--;
+                }
+
+                row = bottom;
+                while (row > top) {
+                    res.push_back(matrix[row][left]);
+                    row--;
+                }
+            }
+            left++;
+            right--;
+            top++;
+            bottom--;
+
+        }
+        return res;
+    }
+};
