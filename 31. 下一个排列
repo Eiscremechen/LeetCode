@@ -1,0 +1,28 @@
+class Solution {
+public:
+// 1. 从后向前 查找第一个 相邻升序 的元素对 (i,j)，满足 A[i] < A[j]。此时 [j,end) 必然是降序
+// 2. 在 [j,end) 从后向前 查找第一个满足 A[i] < A[k] 的 k。A[i]、A[k] 分别就是上文所说的「小数」、「大数」
+// 3. 将 A[i] 与 A[k] 交换
+// 4. 可以断定这时 [j,end) 必然是降序，逆置 [j,end)，使其升序
+// 5. 如果在步骤 1 找不到符合的相邻元素对，说明当前 [begin,end) 为一个降序顺序，则直接跳到步骤 4
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int i = n - 2;
+        while(i >= 0 && nums[i] >= nums[i + 1]){
+            i--;
+        }
+        if(i != -1){
+            int k = n - 1;
+            while(k >= i + 1){
+                if(nums[i] < nums[k]) {
+                    swap(nums[i], nums[k]);
+                    break;
+                }
+                k--;
+            }
+            reverse(nums.begin() + i + 1, nums.end());
+        } else{
+            reverse(nums.begin(), nums.end());
+        }
+    }
+};
