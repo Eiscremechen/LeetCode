@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxSubArray(std::vector<int>&nums) {
+        int n = nums.size();
+        //dp[i] 代表以元素 nums[i]nums[i]nums[i] 为结尾的连续子数组最大和。
+        std::vector<int> dp(n, 0);
+        dp[0] = nums[0];
+
+        for(int i = 1; i < n; i++){
+            //若 dp[i−1]≤0dp[i-1] \leq 0dp[i−1]≤0 ，说明 dp[i−1]dp[i - 1]dp[i−1] 对 dp[i]dp[i]dp[i] 产生负贡献，即 dp[i−1]+nums[i]dp[i-1] + nums[i]dp[i−1]+nums[i] 还不如 nums[i]nums[i]nums[i] 本身大。
+            if(dp[i - 1] <= 0){
+                dp[i] = nums[i];
+            } else{
+                dp[i] = dp[i - 1] + nums[i];
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
+};
