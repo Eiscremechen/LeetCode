@@ -1,0 +1,35 @@
+class Solution {
+private:
+    static bool MySort(const std::vector<int>& a, const std::vector<int>& b){
+        //如果比较函数返回true，那么它告诉std::sort将第一个元素排在第二个元素之前。
+        // 如果比较函数返回false，那么它告诉std::sort将第一个元素排在第二个元素之后。
+        if(a[1] != b[1]){
+            return a[1] > b[1];
+        }
+        if(a[0] != b[0]){
+            return a[0] > b[0];
+        }
+        //两个相等，返回true or false均可
+        return true;
+    }
+public:
+    std::vector<int> filterRestaurants(std::vector<std::vector<int>>& restaurants, int veganFriendly, int maxPrice, int maxDistance) {
+        std::vector<std::vector<int>> res_temp;
+        int n = 0;
+        for(int i = 0; i < restaurants.size(); i++ ){
+            if(restaurants[i][2] == 0 && veganFriendly == 1){
+                continue;
+            }else{
+                if(restaurants[i][3] <= maxPrice && restaurants[i][4] <= maxDistance){
+                    res_temp.push_back({restaurants[i][0], restaurants[i][1]});
+                }
+            }
+        }
+        sort(res_temp.begin(), res_temp.end(), MySort);
+        std::vector<int> res;
+        for(int i = 0; i < res_temp.size(); i++){
+            res.push_back(res_temp[i][0]);
+        }
+        return res;
+    }
+};
