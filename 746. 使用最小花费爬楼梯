@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int n = cost.size();
+        //dp[i]代表到当前阶梯的最低（优）体力花费
+        std::vector<int> dp(n + 1, 0);
+        dp[0] = 0;
+        dp[1] = 0;
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = std::min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
+        }
+
+        return dp[n];
+    }
+};
+
+or
+
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int dp0 = 0;
+        int dp1 = 0;
+        for (int i = 2; i <= cost.size(); i++) {
+            int dpi = min(dp1 + cost[i - 1], dp0 + cost[i - 2]);
+            dp0 = dp1; // 记录一下前两位
+            dp1 = dpi;
+        }
+        return dp1;
+    }
+};
