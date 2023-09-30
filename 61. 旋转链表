@@ -1,0 +1,109 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseNode(ListNode* head){
+        ListNode* curr = head;
+        ListNode* pre = nullptr;
+        while(curr != nullptr){
+            ListNode* temp = curr->next;
+            curr->next = pre;
+            pre = curr;
+            curr = temp;
+        }
+        return pre;
+    }
+    ListNode* rotateRight(ListNode* head, int k) {
+        ListNode* temp = head;
+        int n = 0;
+        //统计链表长度
+        while(temp != nullptr){
+            temp = temp->next;
+            n++; 
+        }
+        if(n == 0){
+            return nullptr;
+        }
+        //循环链表，所以归一化
+        k = k % n;
+        if(k == 0){
+            return head;
+        }
+        //反转总链表
+        head = reverseNode(head);
+        temp = head;
+        //temp指向第一个子链表的末尾节点，temp->next (即l2)指向第二个子链表的开头节点
+        for(int i = 1; i < k; i++){
+            temp = temp->next; 
+        }
+        ListNode* l2 = temp->next;
+        //截取第一个子链表
+        temp->next = nullptr;
+        //temp指向反转后初始链表的头节点
+        temp = head;
+        //反转两个子链表，反转后temp指向第一个子链表的末尾节点。
+        l2 = reverseNode(l2);
+        head = reverseNode(head);
+        //连接两个链表
+        temp->next = l2;
+        return head;
+    }
+};
+
+
+or
+
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head , int k) {
+        if (head == nullptr) {
+            return head;
+        }
+        // 计算链表中节点个数
+        int len = calculateLen(head);
+        k = k % len;
+        // 慢指针初始指向头节点
+        ListNode* slow = head;
+        // 快指针初始指向头节点
+        ListNode* fast = head;
+        // 快指针先向前移动k步
+        for(int i = 0 ; i < k ; i++) {
+            fast = fast->next;
+        }
+        // 快慢指针同时向前移动，直到快指针指向的节点的
+        // 下一个节点为null
+        while (fast->next != nullptr) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        // 快指针此时在链表末尾
+        // 然后其指向的节点的后继指针指向头节点
+        // 这时链表首尾相连成环
+        fast->next = head;
+        // 新的头节点是慢指针所指节点的下一个节点
+        head = slow->next;
+        // 慢指针所指节点的的后继指针指向null
+        // 断开环
+        slow->next = nullptr;
+        return head;
+    }
+
+private:
+    int calculateLen(ListNode* head){
+        int len = 0;
+        while (head != nullptr) {
+            head = head->next;
+            len++;
+        }
+        return len;
+    }
+};
