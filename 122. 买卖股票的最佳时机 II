@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxProfit(std::vector<int>& prices) {
+        int i = 0;
+        int n = prices.size();
+        int res = 0;
+        while (i < n - 1) {
+            int j = i;
+            while (j < n - 1 && prices[j] <= prices[j + 1]) {
+                j++;
+            }
+            res += prices[j] - prices[i];
+            i = j + 1;
+        }
+        return res;
+    }
+};
