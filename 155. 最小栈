@@ -1,0 +1,43 @@
+class MinStack {
+    //正常储存。
+    std::stack<int> st;
+    //只储存最小值
+    std::stack<int> st_auxiliary;
+public:
+    MinStack() {
+        st_auxiliary.push(INT_MAX);
+    }
+    
+    void push(int val) {
+        st.push(val);
+        if(val > st_auxiliary.top()){
+            st_auxiliary.push(st_auxiliary.top());
+        } else{
+            st_auxiliary.push(val);
+        }
+
+    }
+    
+    void pop() {
+        st.pop();
+        st_auxiliary.pop();
+    }
+    
+    int top() {
+        return st.top();
+    }
+    
+    int getMin() {
+        return st_auxiliary.top();
+
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
