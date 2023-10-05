@@ -1,0 +1,36 @@
+class Solution {
+public:
+    std::vector<int> relativeSortArray(std::vector<int>& arr1, std::vector<int>& arr2) {
+        std::unordered_map <int, int> HashTable;
+        int n_1 = arr1.size();
+        int n_2 = arr2.size();
+
+        for (int i = 0; i < n_1; i++) {
+            if (HashTable.find(arr1[i]) != HashTable.end()) {
+                HashTable[arr1[i]]++;
+            }
+            else {
+                HashTable[arr1[i]] = 1;
+            }
+        }
+
+        std::vector<int> res;
+        for (int i = 0; i < n_2; i++) {
+            for (int j = HashTable[arr2[i]]; j > 0; j--) {
+                res.push_back(arr2[i]);
+                HashTable[arr2[i]]--;
+            }
+        }
+        std::vector<int> res_temp;
+        for (auto paar : HashTable) {
+            while (paar.second > 0) {
+                res_temp.push_back(paar.first);
+                paar.second--;
+            }
+        }
+        
+        std::sort(res_temp.begin(), res_temp.end());
+        res.insert(res.end(), res_temp.begin(), res_temp.end());
+        return res;
+    }
+};
