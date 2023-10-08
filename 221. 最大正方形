@@ -1,0 +1,35 @@
+class Solution {
+private:
+    int min(const int &a, const int &b, const int &c){
+        int minNum = std::min(std::min(a, b), c);
+        return minNum;
+    }
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int row_size = matrix.size();
+        int column_size = matrix[0].size();
+        //dp[row][column]表示以(row, column)为右下角，且只包含1的正方形的边长最大值。
+        std::vector<std::vector<int>> dp(row_size, std::vector<int>(column_size));
+   
+        int sideLength = 0;
+
+        for(int row = 0; row < row_size; row++){
+            for(int column = 0; column < column_size; column++){
+                //如果该位置是0, 那么dp(row, column)一定是0.
+                //如果该位置是1, 那么dp(row, column)的值由上方, 左方和左上方三个相邻位置的dp决定.
+                //即: dp[row][column] = min(dp[row - 1][column], dp[row][column - 1], dp[row - 1][column - 1]) + 1;
+                if(matrix[row][column] == '1'){
+                    if(row == 0 || column == 0){
+                        //边界条件，如果在边界上，那么当matrix[row][column]为1, 那么dp[row][column]只能为1.
+                        dp[row][column] = 1;
+                    }else{
+                        dp[row][column] = min(dp[row - 1][column], dp[row][column - 1], dp[row - 1][column - 1]) + 1;
+                    }
+                    //只有当matrix[row][column]为1, 才会刷新边长.
+                    sideLength = std::max(sideLength, dp[row][column]);
+                }
+            }
+        }
+        return sideLength * sideLength;
+    }
+};
