@@ -4,8 +4,9 @@ public:
         int premin = nums[0];
         int n = nums.size();
         int res = -1;
+        //最大值一定是右侧最大减左侧最小。遍历一次作为最大值，过程中维护左侧最小值即可
         for(int i = 0; i < n; i++){
-            if(premin < nums[i]){
+            if(nums[i] > premin){
                 res = max(nums[i] - premin, res);
             }
             else {
