@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        //异或操作，得到的是两个不同的数的异或值
+        int XorRes = 0;
+        for(int num : nums){
+            XorRes = num ^ XorRes;
+        }
+        //找出最小的非零位(从右往左数)
+        int diffBit = 1;
+        //(diffBit & XorRes) 代表 按位进行与操作
+        //(diffBit && XorRes) 代表 diffBit和XorRes同时为真(c++中，非零数为真)
+        while( (diffBit & XorRes) == 0){
+            diffBit = diffBit << 1;
+        }
+        //最小非零位代表两个不同的值在该位是不同的。
+        //比如 xxxx xx1-和xxxx xx0- 他们的diffBit是 0000 0010
+        //依次将nums划分位两部分，一部分(diffBit & num) == 0, 另一部分是 (diffBit & num) != 0
+        //每一个部分分别包含一个目标值
+        int num1 = 0, num2 = 0;
+        for(int num : nums){
+            if( (diffBit & num) == 0){
+                num1 = num ^ num1;
+            } else{
+                num2 = num ^ num2;
+            }
+        }
+        return {num1, num2};
+    }
+};
