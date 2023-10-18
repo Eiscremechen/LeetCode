@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long maxKelements(std::vector<int>& nums, int k) {
+        //优先队列，两种定义方式:
+        //std::priority_queue q(nums.begin(), nums.end(), std::less<int>());
+        //std::priority_queue<int, std::vector<int>, std::less<int>> q(nums.begin(), nums.end());
+        std::priority_queue q(nums.begin(), nums.end(), std::less<int>());
+        long long res = 0;
+        while(k > 0){
+            int x = q.top();
+            q.pop();
+            q.push( (x + 2) / 3 ); 
+            res += x;           
+            k--;
+        }
+        return res;
+    }
+};
