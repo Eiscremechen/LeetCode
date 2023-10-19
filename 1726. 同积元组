@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int tupleSameProduct(vector<int>& nums) {
+        //用来储存乘积和出现次数
+        std::unordered_map<int, int> HashTable;
+        int n = nums.size();
+        int res = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                int product = nums[i] * nums[j];
+                if(HashTable.find(product) != HashTable.end()){
+                    HashTable[product]++;
+                } else{
+                    HashTable[product] = 1;
+                }
+            }
+        }
+        for(auto paar : HashTable){
+            if(paar.second >= 2){
+                res += 8 * Combination(paar.second, 2); 
+            } 
+        }
+        return res;
+    }
+    int Combination(int C_down, int C_up){
+        int res = 1;
+        for(int x = 1, y = 1 + C_down - C_up; x <= C_up; x++, y++){
+            res = res * y / x;
+        }
+        return res;
+    }
+};
