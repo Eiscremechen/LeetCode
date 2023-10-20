@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string categorizeBox(int length, int width, int height, int mass) {
+        //1LL代表longlong，不加的话按照int计算。
+        long long volume = 1LL * length * width * height;
+
+        //或者直接强制转换其中一个。这是因为 C++ 中的 "整数提升" 规则。
+        //整数提升规则表明，如果不同的整数类型参与混合运算，那么较小的整数类型将被提升为较大的整数类型，以确保计算的精度不会丢失。
+        // long long volume = static_cast<long long>(length) * width * height;
+        
+        bool Bulky = false;
+        //不能用1e9，因为这是浮点数
+        if (volume >= 1000000000 || length >= 10000 || width >= 10000 || height >= 10000) {
+            Bulky = true;
+        }
+        bool Heavy = false;
+        if (mass >= 100) {
+            Heavy = true;
+        }
+        if (Bulky && Heavy) {
+            return "Both";
+        } else if (!Bulky && !Heavy) {
+            return "Neither";
+        } else if (Bulky && !Heavy) {
+            return "Bulky";
+        } else {
+            return "Heavy";
+        }
+    }
+};
