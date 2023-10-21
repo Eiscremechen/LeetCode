@@ -1,0 +1,47 @@
+class Solution {
+public:
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        //构架一个表示每个点的相邻结点的向量
+        //比如3号节点有两个邻居1和4，那么graph[2] = {1,4};
+        std::vector<std::vector<int>> graph(n);
+        for(const auto& e : edges){
+            int x = e[0];
+            int y = e[1];
+            graph[x].push_back(y);
+            graph[y].push_back(x);
+        }
+        
+        
+        std::vector<bool> used (n, false);
+
+        //以前所有连通块中包含所有点的总数量
+        long long int pre = 0;
+        //当前连通块中包含所有点的数量
+        long long int curr = 0;
+        //无向图中无法到达的点对数
+        long long int sum = 0;
+
+        for(int i = 0; i < n; i++){
+            if(used[i] == false){
+                curr = DFS(graph, i, used);
+                sum += 1LL * curr * pre;
+                pre += curr; 
+            }
+        }
+        return sum;
+    }
+private:
+    long long DFS(const std::vector<std::vector<int>>& graph, int i, std::vector<bool>& used){
+        used[i] = true;
+        //包括当前节点,所以size = 1
+        int size = 1;
+
+        for(int x : graph[i]){
+            if(used[x] == false){
+                size += DFS(graph, x, used);
+            }
+        }
+        //返回该连通块包含所有点的数量
+        return size;
+    }
+};
