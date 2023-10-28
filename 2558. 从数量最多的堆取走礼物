@@ -1,0 +1,15 @@
+class Solution {
+public:
+    long long pickGifts(vector<int>& gifts, int k) {
+        sort(gifts.begin(), gifts.end());
+        for(int i = 0; i < k; i++){
+            sort(gifts.begin(), gifts.end(), greater<int>());
+            gifts[0] = sqrt(gifts[0]);
+        }
+        long long res = 0;
+        for(long long num : gifts){
+            res += num;
+        }
+        return res;
+    }
+};
