@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        DPS({}, 1, k, n);
+        return res;
+    }
+
+private:
+    std::vector<std::vector<int>> res;
+
+    void DPS(std::vector<int> path, int start, int k, int n) {
+        if (path.size() == k) {
+            res.emplace_back(path);
+            return;
+        }
+        for (int i = start; i <= n; i++) {
+            path.push_back(i);
+            DPS(path, i + 1, k, n); // 注意这里的起始值是 i+1
+            path.pop_back();
+        }
+    }
+};
