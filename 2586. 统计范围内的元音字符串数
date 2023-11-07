@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int vowelStrings(vector<string>& words, int left, int right) {
+        int res = 0;
+        while(left <= right){
+            if(*words[left].begin() == 'a' ||
+                *words[left].begin() == 'e' ||
+                *words[left].begin() == 'i' ||
+                *words[left].begin() == 'o' ||
+                *words[left].begin() == 'u' ){
+                    if(*(words[left].end() - 1) == 'a' ||
+                        *(words[left].end() - 1) == 'e' ||
+                        *(words[left].end() - 1) == 'i' ||
+                        *(words[left].end() - 1) == 'o' ||
+                        *(words[left].end() - 1) == 'u' ){
+                        res++;
+                    }
+
+            }
+            left++;
+        }
+        return res;
+    }
+};
