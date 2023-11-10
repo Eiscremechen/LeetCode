@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int res = 0;
+        sort(nums.begin(), nums.end(), less());
+        for(std::vector<int>::iterator it = nums.begin(); it != nums.end(); it++, res++){
+            if(*it != res){
+                break;
+            }
+
+        }
+        return res;
+    }
+};
