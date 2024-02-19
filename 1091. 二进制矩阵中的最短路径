@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        if (grid[0][0] == 1) {
+            return -1;
+        }
+
+        int size = grid.size();
+        if (grid[0][0] == 1 || grid[size - 1][size - 1] == 1) {
+            return -1;
+        }
+        if (grid[size - 1][size - 1] == 0 && size == 1) {
+            return 1;
+        }
+
+        int res = 1;
+        vector<pair<int, int>> dir = { {-1, -1}, {-1 ,0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1,1} };
+
+        queue<pair<int, int>> BFS;
+        BFS.push({0, 0});
+        grid[0][0] = 1;
+
+        while (!BFS.empty()) {
+            int levelSize = BFS.size();  // To process levels properly
+            for (int k = 0; k < levelSize; k++) {
+                auto front = BFS.front();
+                BFS.pop();
+                int x = front.first;
+                int y = front.second;
+
+                for (int i = 0; i < 8; i++) {
+                    int x_temp = x + dir[i].first;
+                    int y_temp = y + dir[i].second;
+                    if (x_temp >= 0 && x_temp < size && y_temp >= 0 && y_temp < size && grid[x_temp][y_temp] == 0) {
+                        if (x_temp == size - 1 && y_temp == size - 1) {
+                            return res + 1;
+                        }
+                        BFS.push({x_temp, y_temp});
+                        grid[x_temp][y_temp] = 1;
+                    }
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+};
